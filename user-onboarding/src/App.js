@@ -1,11 +1,22 @@
 import React from 'react';
 import './App.css';
-import Form from './Form';
+import UserForm from './Form';
 
 function App() {
+
+  const initialUser = {
+    name: '',
+    email: '',
+    password: '',
+    tos: false,
+  }
+
+  const addUser = () => {
+
+  }
   return (
     <div className="App">
-      <Form />
+      <UserForm initialUser={initialUser} addUser={addUser} />
     </div>
   );
 }
