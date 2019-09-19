@@ -1,6 +1,9 @@
 import React, { useState} from 'react';
 import './App.css';
 import UserForm from './Form';
+import ServerError from './Servererror';
+import UserList from './Userlist';
+
 import * as yup from 'yup';
 import axios from 'axios';
 
@@ -11,6 +14,7 @@ function App() {
   // STATE
 
   const [userList, setUserList] = useState([]);
+  const [serverError, setServerError] = useState('');
 
   const initialUser = {
     name: '',
@@ -20,17 +24,16 @@ function App() {
   }
 
   const addUser = (formValues, actions) => {
-    debugger
     const {email, name, password, tos} = formValues;
     
     axios.post(userApi, {email, name, password, tos})
     .then(res => {
       setUserList(userList.concat(res.data))
       actions.resetForm()
-      debugger
+
     })
     .catch(data => {
-      debugger
+      setServerError(data.message)
     })
   }
 
@@ -44,6 +47,8 @@ function App() {
   return (
     <div className="App">
       <UserForm initialUser={initialUser} addUser={addUser} validationSchema={validationSchema} />
+      <ServerError serverError={serverError} />
+      <UserList userList={userList} />
     </div>
   );
 }
