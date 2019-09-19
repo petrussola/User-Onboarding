@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState} from 'react';
 import './App.css';
 import UserForm from './Form';
 import * as yup from 'yup';
+import axios from 'axios';
+
+const userApi = 'https://reqres.in/api/users';
 
 function App() {
+
+  // STATE
+
+  const [userList, setUserList] = useState([]);
 
   const initialUser = {
     name: '',
@@ -12,8 +19,19 @@ function App() {
     tos: false,
   }
 
-  const addUser = (formValues) => {
-debugger
+  const addUser = (formValues, actions) => {
+    debugger
+    const {email, name, password, tos} = formValues;
+    
+    axios.post(userApi, {email, name, password, tos})
+    .then(res => {
+      setUserList(userList.concat(res.data))
+      actions.resetForm()
+      debugger
+    })
+    .catch(data => {
+      debugger
+    })
   }
 
   const validationSchema = yup.object().shape({
