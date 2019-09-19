@@ -12,14 +12,15 @@ function App() {
     tos: false,
   }
 
-  const addUser = () => {
-
+  const addUser = (formValues) => {
+debugger
   }
 
   const validationSchema = yup.object().shape({
     name: yup.string().required("I need a name"),
     email: yup.string().email("This is not an email").required("I need an email"),
-    password: yup.string().min(7, "This password is too short")
+    password: yup.string().min(7, "This password is too short"),
+    tos: yup.boolean().oneOf([true], 'You need to accept ToS before submitting'),
   });
 
   return (
